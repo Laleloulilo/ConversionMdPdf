@@ -57,7 +57,7 @@ Template LaTeX issu de https://github.com/Wandmalfarbe/pandoc-latex-template et 
 
 Fichier entete.md utilisé pour poser standard de création de fichier pdf.
 
-## Ligne de commande utilisé en création Pandoc
+## Ligne de commande utilisée en création Pandoc
 
 pandoc entree.md -o sortie.pdf --from markdown --template eisvogel --listings
 
