@@ -10,9 +10,7 @@ function nettoyageDossierDestinationIncluantSousDossier($directory, $empty = tru
     if (substr($directory, -1) == "/") {
         $directory = substr($directory, 0, -1);
     }
-    if (!file_exists($directory) || !is_dir($directory)) {
-        return false;
-    } elseif (!is_readable($directory)) {
+    if (!file_exists($directory) || !is_dir($directory) || !is_readable($directory)) {
         return false;
     } else {
         $directoryHandle = opendir($directory);
@@ -35,7 +33,6 @@ function nettoyageDossierDestinationIncluantSousDossier($directory, $empty = tru
     }
 }
 
-
 function dossierExistantOuLeCreer($path)
 {
     if (is_dir($path)) {
@@ -45,7 +42,7 @@ function dossierExistantOuLeCreer($path)
     }
 }
 
-function creerRequetesPandoc($adresseDossierSource,$adresseDossierRendu, $enTeteMd)
+function creerRequetesPandoc($adresseDossierSource, $adresseDossierRendu, $enTeteMd)
 {
     echo "\n########## Début du traitement ##########";
 
@@ -56,7 +53,7 @@ function creerRequetesPandoc($adresseDossierSource,$adresseDossierRendu, $enTete
         $info = new SplFileInfo($nomFichier);
         $extension = $info->getExtension();
         if ($extension == "md") {
-            $listeCommandes .= "\n pandoc " . $enTeteMd . ' "'. $adresseDossierSource . "/" . $nomFichier . '" -o "' .$adresseDossierRendu."/". pathinfo($nomFichier, PATHINFO_FILENAME) . ".pdf".'"';
+            $listeCommandes .= "\n pandoc " . $enTeteMd . ' "' . $adresseDossierSource . "/" . $nomFichier . '" -o "' . $adresseDossierRendu . "/" . pathinfo($nomFichier, PATHINFO_FILENAME) . ".pdf" . '"';
             $listeCommandes .= " --from markdown --template eisvogel --listings";
         }
     }
