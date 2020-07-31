@@ -5,14 +5,12 @@ $sousDossierRenduPDF = "./renduPDF";
 $sousDossierSourceMd = "./sourceMd";
 $adresseEnTeteMd = "./TemplatingUtilise/entete.md";
 
-function nettoyageDossierDestinationIncluantSousDossier($directory, $empty = true)
+function nettoyageDossierDestinationIncluantSousDossier($directory)
 {
     if (substr($directory, -1) == "/") {
         $directory = substr($directory, 0, -1);
     }
-    if (!file_exists($directory) || !is_dir($directory) || !is_readable($directory)) {
-        return false;
-    } else {
+    if (file_exists($directory) || is_dir($directory) || is_readable($directory)) {
         $directoryHandle = opendir($directory);
         while ($contents = readdir($directoryHandle)) {
             if ($contents != '.' && $contents != '..') {
@@ -20,16 +18,11 @@ function nettoyageDossierDestinationIncluantSousDossier($directory, $empty = tru
 
                 if (is_dir($path)) {
                     nettoyageDossierDestinationIncluantSousDossier($path);
-                } else {
-                    unlink($path);
                 }
+                unlink($path);
             }
         }
         closedir($directoryHandle);
-        if (!$empty && !rmdir($directory)) {
-            return false;
-        }
-        return true;
     }
 }
 
